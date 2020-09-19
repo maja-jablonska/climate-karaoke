@@ -37,7 +37,7 @@ export const Player = ({setPlaySong, lyricsObj, youtubeData, audioFile}) => {
             <div className="Player-box">
                 <div>
                     <h3 className="Player-h3">{song}</h3>
-                    <p className="Player-p">Video: <a href={`https://www.youtube.com/watch?v=${id}`}>{title}</a></p>
+                    <p className="Player-p">Video: <a className="Player-a" href={`https://www.youtube.com/watch?v=${id}`}>{title}</a></p>
                 </div>
                 <div style={{pointerEvents: "none"}}>
                             <ReactPlayer 
