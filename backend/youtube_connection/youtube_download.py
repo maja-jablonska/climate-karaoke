@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import youtube_dl
 import os
-import shutil
 
 
 YOUTUBE_WATCH_STRING: str = "https://www.youtube.com/watch?v="

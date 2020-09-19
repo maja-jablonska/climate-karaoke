@@ -1,5 +1,6 @@
 import json
 import os
+import moviepy.editor as mp
 from typing import Dict
 
 from flask import Flask, request, abort, send_from_directory
@@ -11,7 +12,6 @@ from .youtube_connection import fetch_video_data
 from .youtube_connection.youtube_data import YoutubeData
 from .youtube_connection.youtube_download import download_from_youtube
 from .vocal_split import split_vocals
-
 from .genius_connection import query_genius
 
 
@@ -45,6 +45,7 @@ def create_app() -> Flask:
         return payload_data(youtube_data.to_json())
 
     @app.route('/download', methods=['GET'])
+    @cache.cached()
     def download_song():
         artist_name: str = request.args.get('artist_name', type=str)
         song_name: str = request.args.get('song_name', type=str)
@@ -57,6 +58,7 @@ def create_app() -> Flask:
                                    accompaniament_filename)
 
     @app.route('/lyrics', methods=['GET'])
+    @cache.cached()
     def request_lyrics():
         song_name: str = request.args.get('song_name', type=str)
         genius_data = query_genius(song_name)
