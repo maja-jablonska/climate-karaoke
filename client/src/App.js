@@ -19,7 +19,7 @@ function App() {
   const fetchLyrics = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/lyrics?song_name="${value}"`)
-      const youtubeResponse = await fetch(`${BACKEND_URL}/song?song_name="${value}`)
+      const youtubeResponse = await fetch(`${BACKEND_URL}/song?song_name="${value}&artist_name=""`)
       const data = await response.json()
       const ytData = await youtubeResponse.json()
       setLyrics(data)
@@ -37,7 +37,7 @@ function App() {
   const fetchAudio = async () => {
     setLoadingAudio(true)
     try {
-      const youtubeResponse = await fetch(`${BACKEND_URL}/download?song_name="${value}`)
+      const youtubeResponse = await fetch(`${BACKEND_URL}/download?song_name="${value}&artist_name=""`)
       const ytData = await youtubeResponse.json()
       setAudio(new Audio(ytData))
     } catch (err) {
