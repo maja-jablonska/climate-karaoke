@@ -14,12 +14,12 @@ function App() {
   const [youtubeData, setYoutubeData] = useState(undefined)
   const [error, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
-  const [audio, setAudio] = useState(undefined)
+  const [audioFile, setAudioFile] = useState(undefined)
 
   const fetchLyrics = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/lyrics?song_name="${value}"`)
-      const youtubeResponse = await fetch(`${BACKEND_URL}/song?song_name="${value}&artist_name=""`)
+      const youtubeResponse = await fetch(`${BACKEND_URL}/song?song_name="${value}"&artist_name=""`)
       const data = await response.json()
       const ytData = await youtubeResponse.json()
       setLyrics(data)
@@ -37,9 +37,14 @@ function App() {
   const fetchAudio = async () => {
     setLoadingAudio(true)
     try {
-      const youtubeResponse = await fetch(`${BACKEND_URL}/download?song_name="${value}&artist_name=""`)
-      const ytData = await youtubeResponse.json()
-      setAudio(new Audio(ytData))
+      const youtubeResponse = await fetch(`${BACKEND_URL}/download?song_name="${value}"&artist_name=""`)
+      if (!youtubeResponse.ok) {
+        throw new Error()
+      }
+      const blob = await youtubeResponse.blob()
+      const file = new Blob([blob], { type: "audio/wav"})
+      const url = URL.createObjectURL(file)
+      setAudioFile(url)
     } catch (err) {
       setErrorMessage("We couldn't process audio for you. Try once again.")
       setError(true)
@@ -63,7 +68,7 @@ function App() {
       <header className="App-header">
         {loading ? <Loading loadingAudio={loadingAudio}/> :
         <>
-        {playSong ? <Player setPlaySong={setPlaySong} lyricsObj={lyrics} youtubeData={youtubeData} audio={audio}/> :
+        {playSong ? <Player setPlaySong={setPlaySong} lyricsObj={lyrics} youtubeData={youtubeData} audioFile={audioFile}/> :
         <Search value={value} setValue={setValue} setLoading={setLoading} fetchLyrics={fetchData}
         error={error} errorMessage={errorMessage}/>}
 </>}
