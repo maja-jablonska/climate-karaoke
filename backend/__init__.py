@@ -7,6 +7,8 @@ from flask_caching import Cache
 from flask_cors import CORS
 
 from .json_utils import simple_message, payload_data
+from .youtube_connection import fetch_video_data
+from .youtube_connection.youtube_data import YoutubeData
 
 
 def read_json_configuration() -> Dict[str, str]:
@@ -32,6 +34,7 @@ def create_app() -> Flask:
     def request_song():
         artist_name: str = request.args.get('artist_name', type=str)
         song_name: str = request.args.get('song_name', type=str)
-        return payload_data({})
+        youtube_data: YoutubeData = fetch_video_data(f'{artist_name} {song_name}')
+        return payload_data(youtube_data.to_json())
 
     return app
