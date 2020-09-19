@@ -1,0 +1,35 @@
+import json
+import os
+from typing import Dict
+
+from flask import Flask, request
+from flask_cache import Cache
+from flask_cors import CORS
+
+from .json_utils import simple_message, payload_data
+
+
+def read_json_configuration() -> Dict[str, str]:
+    with open(f'{os.path.dirname(os.path.realpath(__file__))}/configuration.json') as conf:
+        return json.load(conf)
+
+
+def create_app() -> Flask:
+    app: Flask = Flask(__name__, instance_relative_config=True)
+    configuration: Dict[str, str] = read_json_configuration()
+    app.config.from_mapping()
+
+    cache = Cache(config={'CACHE_TYPE': 'simple'})
+    CORS(app)
+    cache.init_app(app)
+
+    @app.route('/')
+    def index():
+        return simple_message('Welcome to climate karaoke!')
+
+    @app.route('/song', methods=['GET'])
+    @cache.cached(timeout=60)
+    def request_song():
+        artist_name: str = request.args.get('artist_name', type=str)
+        song_name: str = request.args.get('song_name', type=str)
+        return payload_data({})
