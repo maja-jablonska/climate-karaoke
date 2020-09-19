@@ -13,6 +13,7 @@ from .youtube_connection.youtube_data import YoutubeData
 from .youtube_connection.youtube_download import download_from_youtube
 from .vocal_split import split_vocals
 from .genius_connection import query_genius
+from .lyrics_generation import *
 
 
 DOWNLOADS: str = os.path.dirname(os.path.realpath(__file__))+'/../downloads/'
@@ -31,6 +32,8 @@ def create_app() -> Flask:
     cache = Cache(config={'CACHE_TYPE': 'simple'})
     CORS(app)
     cache.init_app(app)
+
+    list_buckets()
 
     @app.route('/')
     def index():
