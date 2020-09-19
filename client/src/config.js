@@ -1,1 +1,1 @@
-export const BACKEND_URL = "http://localhost:5000"
+export const BACKEND_URL = "http://env-karaoke-env.eba-mpksfvhe.eu-central-1.elasticbeanstalk.com"
