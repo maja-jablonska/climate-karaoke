@@ -10,6 +10,10 @@ google-auth==1.21.2
 google-auth-httplib2==0.0.4
 google-auth-oauthlib==0.4.1
 googleapis-common-protos==1.52.0
+google-cloud-core==1.4.1
+google-cloud-storage==1.31.0
+google-crc32c==1.0.0
+google-resumable-media==1.0.0
 moviepy==1.0.3
 spleeter==1.5.4
 Werkzeug==1.0.1
