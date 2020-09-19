@@ -8,10 +8,12 @@ import logo from './karaoke_logo.png';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-export const Player = ({setPlaySong}) => {
+export const Player = ({setPlaySong, lyricsObj, youtubeData, audio}) => {
     const [playVideo, setPlayVideo] = useState(false)
     const [loading, setLoading] = useState(true)
-    const audio = new Audio("./song.mp3")
+
+    const {lyrics, song} = lyricsObj;
+    const {id, title} = youtubeData;
 
     const start = () => {
         if (playVideo) { console.log("pausi9ng"); audio.pause();
@@ -35,9 +37,13 @@ export const Player = ({setPlaySong}) => {
     
 </div>
 <div className="Player-box">
+    <div>
+        <h3 className="Player-h3">{song}</h3>
+        <p className="Player-p">Video: <a href={`https://www.youtube.com/watch?v=${id}`}>{title}</a></p>
+    </div>
     <div style={{pointerEvents: "none"}}>
                 <ReactPlayer 
-                url={"https://www.youtube.com/watch?v=fQDEUU1lyZQ&list=RDWAnYiAdr2tM"} 
+                url={`https://www.youtube.com/watch?v=${id}`} 
                 controls={false}
                 playing={playVideo}
                 muted={true}
@@ -53,24 +59,3 @@ export const Player = ({setPlaySong}) => {
         </div>
     )
 }
-
-const lyrics = ["Nos envies ne sont plus personne",
-"Mais ne t'en veux pas",
-"Aujourd'hui les mots m'emprisonnent",
-"Mais quand tu verras",
-"Dans mes nuits l'écho du sémaphore",
-"Alors tu iras",
-"Sans répit chasser les fantômes",
-"Qui rodent avec moi",
-"C'est déjà la fin de l'automne",
-"Quand tu reviendras",
-"Au sémaphore ton nom résonne",
-"Et ne s'arrête pas, tu vois",
-"Au sémaphore ton nom résonne",
-"Et ne s'arrête pas, tu vois",
-"Aujourd'hui les mots nous abandonnent",
-"Mais il restera",
-"Dans mes nuits l'écho du sémaphore",
-"Et au fond les orages",
-"Sans répit s'enlacent et se tordent",
-"Depuis longtemps…"]
