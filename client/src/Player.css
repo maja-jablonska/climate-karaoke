@@ -1,0 +1,35 @@
+.Player-box {
+    margin-left: 50vw;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.Player-lyrics {
+    position: fixed;
+    height: 100%;
+    width: 45vw;
+    z-index: 1;
+    overflow-x: hidden;
+    top: 0;
+    left: 5vw;
+}
+
+.Player-text-background {
+    background-color: #1a1a1aff;
+  border-color: #666666ff;
+  border-radius: 10px;
+  opacity: 0.80;
+}
+
+.Player-top-box {
+    background-color: #1a1a1aff;
+    position: fixed;
+    height: 10vh;
+    width: 100%;
+    z-index: 1;
+    overflow-x: hidden;
+    top: 0;
+    left:0;
+    overflow-y: hidden;
+
+}
