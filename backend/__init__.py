@@ -3,7 +3,7 @@ import os
 from typing import Dict
 
 from flask import Flask, request
-from flask_cache import Cache
+from flask_caching import Cache
 from flask_cors import CORS
 
 from .json_utils import simple_message, payload_data
@@ -33,3 +33,5 @@ def create_app() -> Flask:
         artist_name: str = request.args.get('artist_name', type=str)
         song_name: str = request.args.get('song_name', type=str)
         return payload_data({})
+
+    return app
