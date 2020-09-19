@@ -4,11 +4,11 @@ import logo from './karaoke_logo.png';
 import { Autocomplete } from '@material-ui/lab';
 
 
-export const Search = ({value, setValue}) => {
+export const Search = ({value, setValue, setLoading}) => {
     return(
         <>
     <img src={logo} className="App-logo" alt="logo" />
-        <div className="App-search">
+        <div className="App-box">
         <Autocomplete
         freeSolo
         id="free-solo-2-demo"
@@ -28,7 +28,7 @@ export const Search = ({value, setValue}) => {
           />
         )}
       />
-      <StyledButton variant="contained" disabled={value.length === 0} onClick={() => console.log(value)}>Sing!</StyledButton>
+      <StyledButton variant="contained" disabled={value.length === 0} onClick={() => {console.log(value); setLoading(true)}}>Sing!</StyledButton>
       </div>
       </>
     )
