@@ -1,0 +1,1 @@
+export const BACKEND_URL = "http://env-karaoke-env.eba-mpksfvhe.eu-central-1.elasticbeanstalk.com"

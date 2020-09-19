@@ -3,12 +3,12 @@ import json
 
 
 class YoutubeData:
-    def __init__(self, json_data: Dict[str, Any]):
+    def __init__(self, json_data: Dict[str, Any], index):
         self.__total_results: int = json_data.get("pageInfo", {}).get("totalResults", 0)
 
         # TODO: filter by 'Official Video'
         # For now, save the first result
-        self.__result: Dict[str, Any] = json_data.get("items", [{}])[0]
+        self.__result: Dict[str, Any] = json_data.get("items", [{}])[index]
         self.__video_id: str = self.__result.get("id", {}).get("videoId", "")
         self.__video_title: str = self.__result.get("snippet", {}).get("title", "")
 
