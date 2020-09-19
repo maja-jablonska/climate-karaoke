@@ -23,7 +23,6 @@ function App() {
       const data = await response.json()
       const ytData = await youtubeResponse.json()
       setLyrics(data)
-      console.log(ytData)
       setYoutubeData(ytData.data)
     } catch (err) {
       setErrorMessage("We couldn't find lyrics for the chosen song. Try again with different title.")
