@@ -10,6 +10,7 @@ from .json_utils import simple_message, payload_data
 from .youtube_connection import fetch_video_data
 from .youtube_connection.youtube_data import YoutubeData
 from .youtube_connection.youtube_download import download_from_youtube
+from .vocal_split import split_vocals
 
 
 DOWNLOADS: str = os.path.dirname(os.path.realpath(__file__))+'/../downloads/'
@@ -48,8 +49,9 @@ def create_app() -> Flask:
         filename: str = download_from_youtube(artist_name,
                                               song_name,
                                               fetch_video_data(f'{artist_name} {song_name}').video_id)
-        print(DOWNLOADS)
-        return send_from_directory(DOWNLOADS,
-                                   f'{filename.split("/")[-1].replace("webm", "mp3")}')
+        accompaniament_path, accompaniament_filename = split_vocals(filename.replace("webm", "mp3"))
+        print(accompaniament_path)
+        return send_from_directory(accompaniament_path,
+                                   accompaniament_filename)
 
     return app

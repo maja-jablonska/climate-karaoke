@@ -8,4 +8,7 @@ sample_rate: int = 44100
 
 
 def split_vocals(filepath: str):
-    separator.separate_to_file(filepath, filepath.replace('.mp3', '-split.mp3'))
+    separated_filename: str = filepath.replace('.mp3', '.split')
+    separator.separate_to_file(filepath, separated_filename)
+    subdir: str = separated_filename.split('/')[-1].replace('.split', '')
+    return f'{separated_filename}/{subdir}', f'accompaniment.wav'
