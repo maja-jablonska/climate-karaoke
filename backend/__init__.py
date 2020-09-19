@@ -1,5 +1,6 @@
 import json
 import os
+import moviepy.editor as mp
 from typing import Dict
 
 from flask import Flask, request, abort, send_from_directory
@@ -10,6 +11,7 @@ from .json_utils import simple_message, payload_data
 from .youtube_connection import fetch_video_data
 from .youtube_connection.youtube_data import YoutubeData
 from .youtube_connection.youtube_download import download_from_youtube
+from .vocal_split import split_vocals
 
 from .genius_connection import query_genius
 
@@ -47,12 +49,18 @@ def create_app() -> Flask:
     def download_song():
         artist_name: str = request.args.get('artist_name', type=str)
         song_name: str = request.args.get('song_name', type=str)
-        filename: str = download_from_youtube(artist_name,
-                                              song_name,
-                                              fetch_video_data(f'{artist_name} {song_name}').video_id)
-        print(DOWNLOADS)
-        return send_from_directory(DOWNLOADS,
-                                   f'{filename.split("/")[-1].replace("webm", "mp3")}')
+        split_filename: str = f'{DOWNLOADS}{artist_name}_{song_name}.split.mp4'
+        if not os.path.exists(split_filename):
+            filename: str = download_from_youtube(artist_name,
+                                                  song_name,
+                                                  fetch_video_data(f'{artist_name} {song_name}').video_id)
+            split_filename = filename.replace('.mp4', '.split.mp4')
+            combined_video = mp.VideoFileClip(filename)
+            combined_video.audio.write_audiofile(filename.replace('mp4', 'mp3'))
+            accompaniament_path, accompaniament_filename = split_vocals(filename.replace('mp4', 'mp3'))
+            combined_video.set_audio(mp.AudioFileClip(accompaniament_path+'/'+accompaniament_filename))
+            combined_video.write_videofile(split_filename, audio_codec='aac', codec='mpeg4')
+        return send_from_directory(DOWNLOADS, f'{artist_name}_{song_name}.split.mp4')
 
     @app.route('/lyrics', methods=['GET'])
     def request_lyrics():
