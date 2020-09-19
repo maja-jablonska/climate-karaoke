@@ -11,6 +11,8 @@ from .youtube_connection import fetch_video_data
 from .youtube_connection.youtube_data import YoutubeData
 from .youtube_connection.youtube_download import download_from_youtube
 
+from .genius_connection import query_genius
+
 
 DOWNLOADS: str = os.path.dirname(os.path.realpath(__file__))+'/../downloads/'
 
@@ -52,4 +54,9 @@ def create_app() -> Flask:
         return send_from_directory(DOWNLOADS,
                                    f'{filename.split("/")[-1].replace("webm", "mp3")}')
 
+    @app.route('/lyrics', methods=['GET'])
+    def request_lyrics():
+        song_name: str = request.args.get('song_name', type=str)
+        genius_data = query_genius(song_name)
+        return genius_data.to_json()
     return app
