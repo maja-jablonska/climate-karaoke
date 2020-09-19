@@ -25,7 +25,7 @@ def fetch_video_data(query: str) -> YoutubeData:
 
     # Get credentials and create an API client
     youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey="AIzaSyAe_eH6IHl5pJeUgomGdsBuJa-wlIDEVvk")
+        api_service_name, api_version, developerKey="AIzaSyDrQU83XoBHSbhfVyj8B0qtWNq9GyIy4bM")
 
     request = youtube.search().list(
         part="snippet",
