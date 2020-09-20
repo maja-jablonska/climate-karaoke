@@ -3,7 +3,7 @@ import os
 import moviepy.editor as mp
 from typing import Dict
 
-from flask import Flask, request, abort, send_from_directory,
+from flask import Flask, request, abort, send_from_directory
 from flask_caching import Cache
 from flask_cors import CORS, cross_origin
 
