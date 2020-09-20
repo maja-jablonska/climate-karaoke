@@ -4,7 +4,7 @@ A karaoke web app which generates alternative lyrics for popular songs to addres
 
 This project was created during HackZurich 2020. See the decription on [devpost](https://devpost.com/software/climate-karaoke).
 
-## Start development environment
+## Getting started 
 
 First, get the backend running:
 ```
@@ -30,4 +30,11 @@ yarn build
 yarn start
 ```
 
+## How does it all work?
 
+The project consists primarily of two parts:
+
+ - **environmental lyrics generaion** - we fetch Genius API to get get the original lyrics, and then run our NLP magic on top of it to alter them based on climate and environment-related data that we managed to obtain and bring awereness to the world,
+ - **playing music** - we take Youtube videos (with Youtube API) and feed them to Spleeter - a fantastic tool from Deezer that allows splitting a vocal track from the rest of the audio. This way you can focus only on the newly generated environment-aware lyrics!
+ 
+ 
