@@ -1,6 +1,7 @@
 import lyricsgenius
 from typing import Sequence
 import re
+from ..lyrics_generation import generate_new_lyrics
 
 class GeniusData:
     def __init__(self, song_data: lyricsgenius.song):
@@ -17,7 +18,8 @@ class GeniusData:
 
     def parse_lyrics(self, lyrics: str) -> Sequence[str]:
         lyrics_without_comments = re.sub("[.*?]", "", lyrics)
-        splitted_lyrics = lyrics_without_comments.split("\n")
+        generated_lyrics = generate_new_lyrics(lyrics_without_comments)
+        splitted_lyrics = generated_lyrics.split("\n")
         filtered_lyrics = [line for line in splitted_lyrics if '[' not in line and ']' not in line]
         return filtered_lyrics
 

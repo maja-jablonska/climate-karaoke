@@ -33,8 +33,6 @@ def create_app() -> Flask:
     CORS(app)
     cache.init_app(app)
 
-    list_buckets()
-
     @app.route('/')
     def index():
         return simple_message('Welcome to climate karaoke!')
