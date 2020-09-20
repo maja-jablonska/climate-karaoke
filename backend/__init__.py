@@ -5,7 +5,7 @@ from typing import Dict
 
 from flask import Flask, request, abort, send_from_directory
 from flask_caching import Cache
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from .json_utils import simple_message, payload_data
 from .youtube_connection import fetch_video_data
@@ -38,6 +38,7 @@ def create_app() -> Flask:
         return simple_message('Welcome to climate karaoke!')
 
     @app.route('/song', methods=['GET'])
+    @cross_origin()
     @cache.cached()
     def request_song():
         artist_name: str = request.args.get('artist_name', type=str)
@@ -46,6 +47,7 @@ def create_app() -> Flask:
         return payload_data(youtube_data.to_json())
 
     @app.route('/download', methods=['GET'])
+    @cross_origin()
     def download_song():
         artist_name: str = request.args.get('artist_name', type=str)
         song_name: str = request.args.get('song_name', type=str)
@@ -58,6 +60,7 @@ def create_app() -> Flask:
                                    accompaniament_filename)
 
     @app.route('/lyrics', methods=['GET'])
+    @cross_origin()
     def request_lyrics():
         song_name: str = request.args.get('song_name', type=str)
         genius_data = query_genius(song_name)
