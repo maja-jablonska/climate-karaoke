@@ -3,7 +3,7 @@ import os
 import moviepy.editor as mp
 from typing import Dict
 
-from flask import Flask, request, abort, send_from_directory
+from flask import Flask, request, abort, send_from_directory,
 from flask_caching import Cache
 from flask_cors import CORS, cross_origin
 
@@ -32,6 +32,12 @@ def create_app() -> Flask:
     cache = Cache(config={'CACHE_TYPE': 'simple'})
     CORS(app)
     cache.init_app(app)
+
+    @app.after_request  # blueprint can also be app~~
+    def after_request(response):
+        header = response.headers
+        header['Access-Control-Allow-Origin'] = '*'
+        return response
 
     @app.route('/')
     def index():
